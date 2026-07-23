@@ -639,7 +639,7 @@ router.post("/verify-phone", async (req, res) => {
       res.cookie("passengerPhone", phoneNo, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite:process.env.NODE_ENV === "production"?"none":"lax",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
       return res.json({
@@ -663,7 +663,12 @@ router.post("/verify-phone", async (req, res) => {
 
 // API: Logout (clear cookie)
 router.post("/logout", (req, res) => {
-  res.clearCookie("passengerPhone");
+  res.clearCookie("passengerPhone", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    path: "/",
+  });
   res.json({
     success: true,
     message: "Logged out successfully",
@@ -902,7 +907,7 @@ router.post("/verify-otp", async (req, res) => {
       res.cookie("passengerPhone", phoneNo, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-         sameSite:process.env.NODE_ENV === "production"?"none":"lax",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 

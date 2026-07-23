@@ -194,7 +194,7 @@ router.post("/verify-otp", async (req, res) => {
       res.cookie("agentToken", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite:process.env.NODE_ENV === "production"?"none":"lax",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         path: "/", // Ensure cookie is available for all paths
       });
@@ -299,8 +299,8 @@ router.get("/check-login", (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("agentToken", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     path: "/",
   });
   res.json({
